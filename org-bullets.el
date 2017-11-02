@@ -112,13 +112,13 @@ Should this be undesirable, one can remove them with
     (if org-bullets-mode
         (progn
           (font-lock-add-keywords nil keyword)
-          (font-lock-fontify-buffer))
+          (font-lock-flush))
       (save-excursion
         (goto-char (point-min))
         (font-lock-remove-keywords nil keyword)
         (while (re-search-forward "^\\*+ " nil t)
           (decompose-region (match-beginning 0) (match-end 0)))
-        (font-lock-fontify-buffer))
+        (font-lock-flush))
       )))
 
 (provide 'org-bullets)

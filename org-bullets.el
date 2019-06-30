@@ -57,6 +57,17 @@ Otherwise the face of the heading level is used."
   :group 'org-bullets
   :type 'symbol)
 
+(defcustom org-bullets-invisible-leading-stars nil
+  "Invisible leading stars, instead of hidden via colour.
+Instead of making leading stars of headings have the same
+colour with background, make them disappear completely.  Useful
+if the theme used or the contents of `org-bullets-bullet-list'
+makes obvious the level of the heading.  Be aware that the
+distance of the bullets from the left edge of the window will be
+identical for all levels."
+  :group 'org-bullets
+  :type 'boolean)
+
 (defvar org-bullets-bullet-map (make-sparse-keymap))
 
 (defun org-bullets-level-char (level)
@@ -84,11 +95,15 @@ Otherwise the face of the heading level is used."
                                (- (match-end 0) 1)
                                'face
                                org-bullets-face-name))
-          (put-text-property (match-beginning 0)
-                             (- (match-end 0) 2)
-                             'face (list :foreground
-                                         (face-attribute
-                                          'default :background)))
+          (if org-bullets-invisible-leading-stars
+                      (put-text-property (match-beginning 0)
+                                         (- (match-end 0) 2)
+                                         'display '(space . (:width 0)))
+                    (put-text-property (match-beginning 0)
+                                       (- (match-end 0) 2)
+                                       'face (list :foreground
+                                                   (face-attribute
+                                                    'default :background))))
           (put-text-property (match-beginning 0)
                              (match-end 0)
                              'keymap

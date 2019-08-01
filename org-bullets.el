@@ -61,7 +61,7 @@ Otherwise the face of the heading level is used."
 
 (defun org-bullets-level-char (level)
   (string-to-char
-   (nth (mod (1- level)
+   (nth (mod (1- (/ level (if org-odd-levels-only 2 1)))
              (length org-bullets-bullet-list))
         org-bullets-bullet-list)))
 
